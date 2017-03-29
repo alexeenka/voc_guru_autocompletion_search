@@ -63,7 +63,7 @@ public class AutocompletionWordsTest {
     {
       final Instant startTime = Instant.now();
       for (int i = 0; i < words.size(); i++) {
-        final String searchWord = words.get((words.size() - 1) / 2);
+        final String searchWord = words.get(randomIndex(words.size()));
         assertWord(instance, searchWord);
       }
       final Instant finishTime = Instant.now();
@@ -71,14 +71,17 @@ public class AutocompletionWordsTest {
               .between(startTime, finishTime).toMillis() + "ms");
     }
 
-    // check alphabet
+    // check 2 letter word search
     {
       final Instant startTime = Instant.now();
-      for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
-        assertWord(instance, Character.toString(alphabet));
+      for (int i = 0; i < words.size(); i++) {
+        final String searchWord = words.get(randomIndex(words.size())).substring(0, 2);
+        List<String> search = instance.findWords(searchWord);
+
+        assertWord(instance, searchWord);
       }
       final Instant finishTime = Instant.now();
-      System.out.println("Iterate alphabet: " + ('Z' - 'A' + 1) + ". Duration: " + Duration.between(
+      System.out.println("Iterate 2 letter words. Duration: " + Duration.between(
               startTime,
               finishTime).toMillis() + "ms");
     }
@@ -97,14 +100,27 @@ public class AutocompletionWordsTest {
               startTime,
               finishTime).toMillis() + "ms");
     }
+
+    // check alphabet
+    {
+      final Instant startTime = Instant.now();
+      for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
+        assertWord(instance, Character.toString(alphabet));
+      }
+      final Instant finishTime = Instant.now();
+      System.out.println("Iterate alphabet: " + ('Z' - 'A' + 1) + ". Duration: " + Duration.between(
+              startTime,
+              finishTime).toMillis() + "ms");
+    }
+
   }
 
   private void assertWord(AutocompletionWords instance, String searchWord) {
     final List<String> search = instance.findWords(searchWord);
     for (String iWord : search) {
       assertThat(iWord, startsWith(searchWord));
-      isNaturalOrdering(search);
     }
+    isNaturalOrdering(search);
   }
 
   private void isNaturalOrdering(List<String> search) {
