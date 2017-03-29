@@ -9,6 +9,7 @@ import java.util.List;
  *
  * Created by aalexeenka on 29.03.2017.
  */
+@SuppressWarnings("WeakerAccess")
 public class AutocompletionWords {
 
   private static AutocompletionWords instance = new AutocompletionWords();
