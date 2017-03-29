@@ -81,7 +81,7 @@ public class AutocompletionWordsTest {
         assertWord(instance, searchWord);
       }
       final Instant finishTime = Instant.now();
-      System.out.println("Iterate 2 letter words. Duration: " + Duration.between(
+      System.out.println("Iterate 2 letter parts, size: " + words.size() + ". Duration: " + Duration.between(
               startTime,
               finishTime).toMillis() + "ms");
     }
@@ -96,7 +96,7 @@ public class AutocompletionWordsTest {
         assertWord(instance, searchWord);
       }
       final Instant finishTime = Instant.now();
-      System.out.println("Iterate 3 letter words. Duration: " + Duration.between(
+      System.out.println("Iterate 3 letter parts, size: " + words.size() + ". Duration: " + Duration.between(
               startTime,
               finishTime).toMillis() + "ms");
     }
